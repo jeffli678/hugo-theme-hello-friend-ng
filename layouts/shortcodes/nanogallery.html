@@ -6,7 +6,8 @@
 
 <div class="gallery" data-nanogallery2 = '{
         "thumbnailHeight":  200,
-        "thumbnailWidth":   200
+        "thumbnailWidth":   200,
+        "viewerGallery": "none"
     }'>
     {{ $base := .Get "src" }}
     {{ $path := print "static/" (.Get "src") }}
