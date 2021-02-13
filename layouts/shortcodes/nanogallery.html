@@ -1,0 +1,23 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" type="text/javascript"></script>
+          
+<!-- nanogallery2 -->
+<link  href="https://cdn.jsdelivr.net/npm/nanogallery2@3/dist/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
+<script  type="text/javascript" src="https://cdn.jsdelivr.net/npm/nanogallery2@3/dist/jquery.nanogallery2.min.js"></script>
+
+<div class="gallery" data-nanogallery2 = '{
+        "thumbnailHeight":  200,
+        "thumbnailWidth":   200
+    }'>
+    {{ $base := .Get "src" }}
+    {{ $path := print "static/" (.Get "src") }}
+
+    {{ range (readDir $path) }}
+        {{- $thumbext := "-thumb" }}
+        {{- $isthumb := .Name | findRE ($thumbext | printf "%s\\.") }}<!-- is the current file a thumbnail image? -->
+        {{- $isimg := lower .Name | findRE "\\.(gif|jpg|jpeg|tiff|png|bmp)" }}<!-- is the current file an image? -->
+        {{- if and $isimg (not $isthumb) }}
+        {{- $thumb := .Name | replaceRE "(\\.)" ($thumbext | printf "%s.") }}
+            <a href = "/{{ $base }}/{{ .Name }}"   data-ngThumb = "/{{ $base  }}/{{ $thumb }}" > </a>
+        {{- end }}
+    {{ end }}
+</div>
